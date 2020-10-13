@@ -36,6 +36,9 @@ Require this package in your `composer.json` and update composer.
 
 ```php
 "uyanik13/dro-seo-analyzer": "~1.0"
+
+or run command
+composer require uyanik13/dro-seo-analyzer
 ```
 
 # Documentation
