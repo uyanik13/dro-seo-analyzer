@@ -62,7 +62,7 @@ public function searchResults (Array $data)
                         'user_id'       => $this->user->id,
                         'session_id'    => 'user',
                         'analyze_id'    => $data['analyze_id'],
-                        'website'       => $data['domainname'],
+                        'website'       => $data['domainUrl'],
                         'seo_info'      => json_encode($data),
                         'score'         => $data['points']['allPoints'],
                        ]);
@@ -70,12 +70,12 @@ public function searchResults (Array $data)
 
                  }else{
 
-                        $analyzed = Analyzer::where('website', $data['domainname'])
+                        $analyzed = Analyzer::where('website', $data['domainUrl'])
                                            ->where('session_id', session()->getId())
                                            ->first();
 
                         if($analyzed){
-                                $analyzed->website  =  $data['domainname'];
+                                $analyzed->website = $data['domainUrl'];
                                 $analyzed->seo_info = json_encode($data);
                                 $analyzed->analyze_id = $data['analyze_id'];
                                 $analyzed->score = $data['points']['allPoints'];
@@ -85,7 +85,7 @@ public function searchResults (Array $data)
                                 'user_id'       => 'guest',
                                 'session_id'    => session()->getId(),
                                 'analyze_id'    => $data['analyze_id'],
-                                'website'       => $data['domainname'],
+                                'website'       => $data['domainUrl'],
                                 'seo_info'      => json_encode($data),
                                 'score'         => $data['points']['allPoints'],
                        ]);
@@ -101,20 +101,20 @@ public function searchResults (Array $data)
 
  public function getAllAnalyzations ($paginate = 15)
  {
-       return Analyzer::paginate($paginate);
+       return Analyzer::orderBy('updated_at','DESC')->paginate($paginate);
  }
 
 
-    private function sendEmail($email)
+    public function sendEmail($email,$seoInfo = null)
   {
 
-
+     $seoInfo = $seoInfo ? $seoInfo : $this->seoInfo;
      $email = $email ? $email : 'ogur@dijitalreklam.org';
      $cc = config('seo-analyzer.cc') ? config('seo-analyzer.cc') : 'ogur@dijitalreklam.org';
 
      Mail::to($email)
             ->cc($cc)
-            ->send(new AnalyzerMailable($this->seoInfo));
+            ->send(new AnalyzerMailable($seoInfo));
 
 
   }
