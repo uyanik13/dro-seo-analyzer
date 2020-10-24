@@ -1,4 +1,4 @@
-# Laravel 8 on-page SEO Analyzer
+# Laravel 8 one-page SEO Analyzer
 
 This package search for the main content to optimze the SEO results for the content that matters. Ex.: A blog post webpage analyze full webpage and only the blog post text.
 
@@ -46,7 +46,7 @@ composer require uyanik13/dro-seo-analyzer
 ## Usage
 
 ```php
-Register this porvider 'DRO\SeoAnalyzer\SeoServiceProvider::class' to your "app.php" file
+Register this provider 'DRO\SeoAnalyzer\SeoServiceProvider::class' to your "app.php" file
 
 Then use php artisan vendor:publish --provider="DRO\SeoAnalyzer\SeoServiceProvider"  command
 
